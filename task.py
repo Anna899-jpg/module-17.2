@@ -1,22 +1,45 @@
-from app.backend.db import Base
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
-from sqlalchemy.orm import relationship
-from app.models import *
+# Import
+from fastapi import APIRouter, Depends, status, HTTPException, FastAPI
+# Сессия БД
+from sqlalchemy.orm import Session
+# Функция подключения к БД
+from app.backend.db_depends import get_db
+# Аннотации, Модели БД и Pydantic.
+from typing import Annotated
+from app.models.user import User
+from app.schemas import CreateUser, UpdateUser
+# Функции работы с записями.
+from sqlalchemy import insert, select, update, delete
+# Функция создания slug-строки
+from slugify import slugify
 
-class Task(Base):
-    __tablename__ = 'tasks'
-    __table_args__ = {'keep_existing': True}
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String)
-    content = Column(String)
-    priority = Column(Integer, default=0)
-    completed = Column(Boolean, default=False)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=True, index=True)
-    slug = Column(String, unique=True, index=True)
-
-    user = relationship('User', back_populates='tasks')
+router = APIRouter(prefix='/task', tags=['task'])
 
 
-from sqlalchemy.schema import CreateTable
 
-print(CreateTable(Task.__table__))
+# GET
+@router.get('/')
+async def all_tasks():
+  pass
+
+@router.get('/task_id')
+async def task_by_id():
+  pass
+
+
+# POST
+@router.post('/create')
+async def create_task():
+  pass
+
+
+# PUT
+@router.put('/update')
+async def update_task():
+  pass
+
+
+# DELETE
+@router.put('/delete')
+async def delete_task():
+  pass
